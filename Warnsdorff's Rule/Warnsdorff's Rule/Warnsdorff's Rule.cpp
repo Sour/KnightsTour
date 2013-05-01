@@ -3,88 +3,57 @@
 
 #include "stdafx.h"
 
-const int xMove[8] = { 1,  1, 2,  2, -1, -1, -2, -2 };
-const int yMove[8] = { 2, -2, 1, -1,  2, -2,  1, -1 };
+const int xMove[8] = { 2, 1, -1, -2, -2, -1,  1,  2 };
+const int yMove[8] = { 1, 2,  2,  1, -1, -2, -2, -1 };
 
 const int N = 8;
-int board[N][N];
-
-void initBoard(){
-	for(int x = 0; x < N; x++)
-		for(int y = 0; y < N; y++)
-			board[x][y] = -1;
-}
+int board[N][N][2];
 
 bool isValid(int x, int y){
-	if( x >= 0 && x < N && y >= 0 && y < N && board[x][y] == -1)
+	if( x >= 0 && x < N && y >= 0 && y < N && board[x][y][0] == -1)
 		return true;
 	return false;
 }
 
-int getSingleCount(int x, int y){
-
-	int tempX, tempY;
+void findValidCount(int x, int y){
 	int count = 0;
-
 	for(int i = 0; i < 8; i++){
 
 		int tempX = x + xMove[i];
 		int tempY = y + yMove[i];
 
-		if(isValid(tempX, tempY) == true)
+		if(isValid((x + xMove[i]), (y + yMove[i])) == true){
 			count++;
-	}
-	return count;
-}
-
-int getWarnsLowest(int count[8]){
-	int index, s = count[0];
-	for(int i = 0; i < 8; i++){
-		if(count[i] < s) {
-			s = count[i];
-			index = i;
 		}
 	}
-	return index;
+	board[x][y][1] = count;
 }
 
-int findValidCount(int x, int y){
+void initBoard(){
+	for(int x = 0; x < N; x++)
+		for(int y = 0; y < N; y++)
+			board[x][y][0] = -1;
 
-	int count[8], tempX, tempY;
-
-	for(int i = 0; i < 8; i++){
-
-		int tempX = x + xMove[i];
-		int tempY = y + yMove[i];
-
-		if(isValid(tempX, tempY) == true)
-			count[i] = getSingleCount(tempX, tempY);
-	}
-	return getWarnsLowest(count);
+	for(int x = 0; x < N; x++)
+		for(int y = 0; y < N; y++)
+			findValidCount(x, y);
 }
 
-bool solveBoard(int x, int y, int index){
-	if(index == N*N)
-		return true;
-
-	int yieldIndex = findValidCount(x,y);
-	int tempX = x + xMove[yieldIndex];
-	int tempY = y + yMove[yieldIndex];
-	if(isValid(tempX, tempY) == true){
-		board[tempX][tempY] = index;
-
-		if(solveBoard(tempX, tempY, index+1) == true){
-			return true;
-		} else {
-			board[tempX][tempY] = -1;
+void printBoard(int i){
+	for (int x = 0; x < N; x++){
+		for (int y = 0; y < N; y++){
+			printf(" %2d ", board[x][y][i]);
 		}
+		printf("\n");
 	}
+	printf("\n");
 }
 
 int main(){
 
 	initBoard();
-	solveBoard(0,0,1);
+	printBoard(0);
+	printBoard(1);
 	getchar();
 	return 0;
 }
