@@ -3,8 +3,9 @@
 
 #include "stdafx.h"
 
-const int xMove[8] = { 2, 1, -1, -2, -2, -1,  1,  2 };
-const int yMove[8] = { 1, 2,  2,  1, -1, -2, -2, -1 };
+const int xMove[8] = { 1,  1, 2,  2, -1, -1, -2, -2 };
+const int yMove[8] = { 2, -2, 1, -1,  2, -2,  1, -1 };
+
 
 const int N = 8;
 int board[N][N][2];
