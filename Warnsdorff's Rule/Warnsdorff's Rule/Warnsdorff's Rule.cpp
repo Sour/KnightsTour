@@ -38,6 +38,8 @@ void initBoard(){
 	for(int x = 0; x < N; x++)
 		for(int y = 0; y < N; y++)
 			findValidCount(x, y);
+
+	board[0][0][0] = 0;
 }
 
 void printBoard(int i){
@@ -48,12 +50,6 @@ void printBoard(int i){
 		printf("\n");
 	}
 	printf("\n");
-}
-
-bool getLowestIndex(int x, int y,int low){
-	if(board[x][y][1] < low && board[x][y][1] != low) 
-		return true;
-	return false;
 }
 
 void solveBoard(int x, int y, int index){
@@ -70,7 +66,7 @@ void solveBoard(int x, int y, int index){
 		tempX = x + xMove[i];
 		tempY = y + yMove[i];
 		if(isValid(tempX, tempY) == true){
-			if(getLowestIndex(tempX, tempY, low) == true);
+			if(board[tempX][tempY][1] < low && board[tempX][tempY][1] != low && board[tempX][tempY][0] == -1)
 				lowIndex = i;
 	
 		}
@@ -78,8 +74,6 @@ void solveBoard(int x, int y, int index){
 
 	board[x+xMove[lowIndex]][y+yMove[lowIndex]][0] = index;
 	solveBoard(x+xMove[lowIndex], y+yMove[lowIndex], index+1);
-	return;
-
 }
 
 
