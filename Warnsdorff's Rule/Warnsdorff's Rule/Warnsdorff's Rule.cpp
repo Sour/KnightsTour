@@ -56,27 +56,29 @@ bool getLowestIndex(int x, int y,int low){
 	return false;
 }
 
-bool solveBoard(int x, int y, int index){
+void solveBoard(int x, int y, int index){
 	
-	int tempX, tempY, lowIndex;
+	int tempX, tempY;
 	int low = 9;
+	int lowIndex = 0;
 
 	if(index == N*N)
-		return true;
+		return;
 	
 	for(int i = 0; i < 8; i++){
 
 		tempX = x + xMove[i];
 		tempY = y + yMove[i];
-
-		if(getLowestIndex(tempX, tempY, low) == true);{
-			lowIndex = i;
+		if(isValid(tempX, tempY) == true){
+			if(getLowestIndex(tempX, tempY, low) == true);
+				lowIndex = i;
 	
 		}
 	}
 
 	board[x+xMove[lowIndex]][y+yMove[lowIndex]][0] = index;
-	solveBoard(x+xMove[lowIndex], y+yMove[lowIndex], index);
+	solveBoard(x+xMove[lowIndex], y+yMove[lowIndex], index+1);
+	return;
 
 }
 
@@ -87,6 +89,7 @@ int main(){
 	printBoard(0);
 	printBoard(1);
 	solveBoard(0, 0, 1);
+	printBoard(0);
 	getchar();
 	return 0;
 }
