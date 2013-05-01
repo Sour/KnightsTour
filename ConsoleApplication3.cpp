@@ -51,7 +51,6 @@ int solveBoard(int x, int y, int index){
 	for(int i = 0; i < 8; i++){
 		tempX = x + xMove[i];
 		tempY = y + yMove[i];
-
 		if(isValid(tempX, tempY) == true){
 			board[tempX][tempY] = index;
 
