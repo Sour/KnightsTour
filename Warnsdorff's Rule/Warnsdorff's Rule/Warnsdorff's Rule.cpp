@@ -23,7 +23,7 @@ void findValidCount(int x, int y){
 		int tempX = x + xMove[i];
 		int tempY = y + yMove[i];
 
-		if(isValid((x + xMove[i]), (y + yMove[i])) == true){
+		if(isValid(tempX, tempY) == true && board[tempX][tempY][1] != 9){
 			count++;
 		}
 	}
@@ -40,6 +40,12 @@ void initBoard(){
 			findValidCount(x, y);
 
 	board[0][0][0] = 0;
+}
+
+void initNewWarns(){
+		for(int x = 0; x < N; x++)
+		for(int y = 0; y < N; y++)
+			findValidCount(x, y);
 }
 
 void printBoard(int i){
@@ -60,7 +66,9 @@ void solveBoard(int x, int y, int index){
 
 	if(index == N*N)
 		return;
-	
+
+	initNewWarns();
+
 	for(int i = 0; i < 8; i++){
 
 		tempX = x + xMove[i];
@@ -71,9 +79,10 @@ void solveBoard(int x, int y, int index){
 					board[tempX][tempY][1] = 9;
 			}
 
-			if(board[tempX][tempY][1] < low){
+			if(board[tempX][tempY][1] < low && board[tempX][tempY][1] != 9){
 				lowIndex = i;
 				low = board[tempX][tempY][1];
+				board[tempX][tempY][1] = 9;
 			}
 	
 		}
@@ -91,7 +100,7 @@ int main(){
 	printBoard(0);
 	printBoard(1);
 	solveBoard(0, 0, 1);
-	printBoard(0);
+	
 	getchar();
 	return 0;
 }
