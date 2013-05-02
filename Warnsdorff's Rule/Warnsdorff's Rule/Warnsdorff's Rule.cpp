@@ -66,14 +66,22 @@ void solveBoard(int x, int y, int index){
 		tempX = x + xMove[i];
 		tempY = y + yMove[i];
 		if(isValid(tempX, tempY) == true){
-			if(board[tempX][tempY][1] < low && board[tempX][tempY][1] != low && board[tempX][tempY][0] == -1)
+
+			if(board[tempX][tempY][0] != -1){
+					board[tempX][tempY][1] = 9;
+			}
+
+			if(board[tempX][tempY][1] < low){
 				lowIndex = i;
+				low = board[tempX][tempY][1];
+			}
 	
 		}
 	}
 
 	board[x+xMove[lowIndex]][y+yMove[lowIndex]][0] = index;
 	solveBoard(x+xMove[lowIndex], y+yMove[lowIndex], index+1);
+	return;
 }
 
 
