@@ -19,11 +19,11 @@ void getSize(){
 
 	cout << "Enter X: ";
 	getline(cin, temp);
-	startX = std::stoi(temp);
+	startX = std::stoi(temp) - 1;
 
 	cout << "Enter Y: ";
 	getline(cin, temp);
-	startY = std::stoi(temp);
+	startY = std::stoi(temp) - 1;
 
 }
 
@@ -40,7 +40,7 @@ void findValidCount(int x, int y){
 		int tempX = x + xMove[i];
 		int tempY = y + yMove[i];
 
-		if(isValid(tempX, tempY) == true && board[tempX][tempY][1] != 9){
+		if(isValid(tempX, tempY) == true){
 			count++;
 		}
 	}
@@ -59,9 +59,22 @@ void initBoard(){
 }
 
 void initNewWarns(){
-		for(int x = 0; x < N; x++)
-		for(int y = 0; y < N; y++)
-			findValidCount(x, y);
+
+	for(int x = 0; x < N; x++){
+		for(int y = 0; y < N; y++){
+			int count = 0;
+			for(int i = 0; i < 8; i++){
+
+				int tempX = x + xMove[i];
+				int tempY = y + yMove[i];
+
+				if(isValid(tempX, tempY) == true)
+					count++;
+			}
+			board[x][y][1] = count;
+		}
+	}
+		
 }
 
 void printBoard(int i){
@@ -108,6 +121,8 @@ void solveBoard(int x, int y, int index){
 	}
 
 	board[x+xMove[lowIndex]][y+yMove[lowIndex]][0] = index;
+	printBoard(0);
+	printBoard(1);
 	solveBoard(x+xMove[lowIndex], y+yMove[lowIndex], index+1);
 	return;
 }
