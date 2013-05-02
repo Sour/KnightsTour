@@ -2,13 +2,30 @@
 // - I mean yolo right?
 
 #include "stdafx.h"
+#include <iostream>
+#include <sstream>
+using namespace std;
 
 const int xMove[8] = { 1,  1, 2,  2, -1, -1, -2, -2 };
 const int yMove[8] = { 2, -2, 1, -1,  2, -2,  1, -1 };
-
-
 const int N = 8;
 int board[N][N][2];
+int startX, startY;
+
+
+void getSize(){
+
+	string temp = "";
+
+	cout << "Enter X: ";
+	getline(cin, temp);
+	startX = std::stoi(temp);
+
+	cout << "Enter Y: ";
+	getline(cin, temp);
+	startY = std::stoi(temp);
+
+}
 
 bool isValid(int x, int y){
 	if( x >= 0 && x < N && y >= 0 && y < N && board[x][y][0] == -1)
@@ -39,7 +56,6 @@ void initBoard(){
 		for(int y = 0; y < N; y++)
 			findValidCount(x, y);
 
-	board[0][0][0] = 0;
 }
 
 void initNewWarns(){
@@ -63,6 +79,9 @@ void solveBoard(int x, int y, int index){
 	int tempX, tempY;
 	int low = 9;
 	int lowIndex = 0;
+
+	if(index == 1)
+		board[x][y][0] = 0;
 
 	if(index == N*N)
 		return;
@@ -97,10 +116,9 @@ void solveBoard(int x, int y, int index){
 int main(){
 
 	initBoard();
+	getSize();
+	solveBoard(startX, startY, 1);
 	printBoard(0);
-	printBoard(1);
-	solveBoard(0, 0, 1);
-	
 	getchar();
 	return 0;
 }
