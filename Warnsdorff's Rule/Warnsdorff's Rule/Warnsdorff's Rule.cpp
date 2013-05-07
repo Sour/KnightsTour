@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include <iostream>
 #include <sstream>
+#include <time.h>
+
 using namespace std;
 
 const int xMove[8] = { 1,  1, 2,  2, -1, -1, -2, -2 };
@@ -87,6 +89,18 @@ void printBoard(int i){
 	printf("\n");
 }
 
+void nextTileSet(){
+	clock_t start;
+	start = clock();
+	while (start){
+		if(clock() - start >= 750){
+			system("CLS");
+			printBoard(0);
+			break;
+		}
+	}
+}
+
 void solveBoard(int x, int y, int index){
 	
 	int tempX, tempY;
@@ -122,8 +136,7 @@ void solveBoard(int x, int y, int index){
 	}
 
 	board[x+xMove[lowIndex]][y+yMove[lowIndex]][0] = index;
-	printBoard(0);
-	getchar();
+	nextTileSet();
 	solveBoard(x+xMove[lowIndex], y+yMove[lowIndex], index+1);
 	return;
 }
