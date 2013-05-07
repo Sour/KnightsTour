@@ -1,5 +1,5 @@
 // Warnsdorff's Rule.cpp
-// - I mean yolo right?
+// - I mean yolo, right?
 
 #include "stdafx.h"
 #include <iostream>
@@ -105,6 +105,7 @@ void solveBoard(int x, int y, int index){
 
 		tempX = x + xMove[i];
 		tempY = y + yMove[i];
+
 		if(isValid(tempX, tempY) == true){
 
 			if(board[tempX][tempY][0] != -1){
@@ -122,7 +123,7 @@ void solveBoard(int x, int y, int index){
 
 	board[x+xMove[lowIndex]][y+yMove[lowIndex]][0] = index;
 	printBoard(0);
-	printBoard(1);
+	getchar();
 	solveBoard(x+xMove[lowIndex], y+yMove[lowIndex], index+1);
 	return;
 }
